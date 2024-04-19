@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ModMetaData>
+    <packageId>ilyvion.RetainStripOnDeath</packageId>
+    <name>Retain Strip on Death</name>
+    <author>ilyvion</author>
+    <description>When a pawn dies, if they were ordered to be stripped, this designation will disappear after they die.
+
+Retain Strip on Death ensures that a pawn that was ordered to be stripped will still be ordered to be stripped after they die.
+
+&lt;size=24&gt;Version&lt;/size&gt;
+
+This is version 0.1.0 for RimWorld 1.4 and 1.5
+
+    </description>
+    <supportedVersions>
+        <li>1.4</li>
+        <li>1.5</li>
+    </supportedVersions>
+    <modDependencies>
+        <li>
+            <packageId>brrainz.harmony</packageId>
+            <displayName>Harmony</displayName>
+            <downloadUrl>https://steamcommunity.com/workshop/filedetails/?id=2009463077</downloadUrl>
+            <steamWorkshopUrl>steam://url/CommunityFilePage/2009463077</steamWorkshopUrl>
+        </li>
+    </modDependencies>
+    <loadAfter>
+        <li>brrainz.harmony</li>
+    </loadAfter>
+</ModMetaData>

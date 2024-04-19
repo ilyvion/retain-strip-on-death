@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LanguageData>
+    <RetainStripOnDeath.AlsoOutsideHomeAreaLabel>Retain stripping designation also outside home area</RetainStripOnDeath.AlsoOutsideHomeAreaLabel>
+    <RetainStripOnDeath.AlsoOutsideHomeAreaToolTip>Rimworld normally forbids corpses that appear outside the home area. With this setting enabled, even those corpses will retain their stripping designation.</RetainStripOnDeath.AlsoOutsideHomeAreaToolTip>
+</LanguageData>
