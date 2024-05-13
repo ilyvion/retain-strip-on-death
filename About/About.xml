@@ -5,11 +5,11 @@
     <author>ilyvion</author>
     <description>When a pawn dies, if they were ordered to be stripped, this designation will disappear after they die.
 
-Retain Strip on Death ensures that a pawn that was ordered to be stripped will still be ordered to be stripped after they die.
+        Retain Strip on Death ensures that a pawn that was ordered to be stripped will still be ordered to be stripped after they die.
 
-&lt;size=24&gt;Version&lt;/size&gt;
+        &lt;size=24&gt;Version&lt;/size&gt;
 
-This is version 0.1.0 for RimWorld 1.4 and 1.5
+        This is version 0.1.1 for RimWorld 1.4 and 1.5
 
     </description>
     <supportedVersions>
