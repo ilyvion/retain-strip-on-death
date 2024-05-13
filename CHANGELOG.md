@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+-   The mod would sometimes cause exceptions when pawns would die without a "current map" which happens sometimes like very early in map generation.
+
 ## [0.1.0]
 
 ### Added

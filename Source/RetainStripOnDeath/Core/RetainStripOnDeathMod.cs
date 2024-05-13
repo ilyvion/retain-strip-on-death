@@ -44,6 +44,11 @@ public class RetainStripOnDeathMod : Mod
         Log.Error("[Retain Strip on Death] " + msg);
     }
 
+    public static void ErrorOnce(string msg, int key)
+    {
+        Log.ErrorOnce("[Retain Strip on Death] " + msg, key);
+    }
+
     public static void Exception(string msg, Exception? e = null)
     {
         Message(msg);
