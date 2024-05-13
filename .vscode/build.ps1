@@ -1,18 +1,26 @@
 $ErrorActionPreference = 'Stop'
 
+$Configuration = 'Release'
+
 $Target = "C:\Program Files (x86)\Steam\steamapps\common\RimWorld\Mods\RetainStripOnDeath"
 
 # build dlls
 $env:RimWorldVersion = "1.4"
-dotnet build .vscode
+dotnet build --configuration $Configuration .vscode/mod.csproj
 if ($LASTEXITCODE -gt 0) {
     throw "Build failed"
 }
 Start-Sleep -Seconds 0.5
 $env:RimWorldVersion = "1.5"
-dotnet build .vscode
+dotnet build --configuration $Configuration .vscode/mod.csproj
 if ($LASTEXITCODE -gt 0) {
     throw "Build failed"
+}
+
+# remove pdbs (for release)
+if ($Configuration -eq "Release") {
+    Remove-Item -Path .\1.5\Assemblies\RetainStripOnDeath.pdb -ErrorAction SilentlyContinue
+    Remove-Item -Path .\1.4\Assemblies\RetainStripOnDeath.pdb -ErrorAction SilentlyContinue
 }
 
 # remove mod folder
