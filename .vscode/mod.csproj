@@ -8,7 +8,7 @@
 
         <RootNamespace>RetainStripOnDeath</RootNamespace>
         <AssemblyName>RetainStripOnDeath</AssemblyName>
-        <VersionPrefix>0.1.1</VersionPrefix>
+        <VersionPrefix>0.2.0</VersionPrefix>
 
         <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
 
