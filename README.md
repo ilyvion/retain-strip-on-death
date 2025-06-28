@@ -1,4 +1,4 @@
-[![RimWorld 1.5](https://img.shields.io/badge/RimWorld-1.5-brightgreen.svg)](http://rimworldgame.com/) [![Build](https://github.com/ilyvion/retain-strip-on-death/actions/workflows/build.yml/badge.svg)](https://github.com/ilyvion/retain-strip-on-death/actions/workflows/build.yml)
+[![RimWorld 1.6](https://img.shields.io/badge/RimWorld-1.6-brightgreen.svg)](http://rimworldgame.com/) [![Build](https://github.com/ilyvion/retain-strip-on-death/actions/workflows/build.yml/badge.svg)](https://github.com/ilyvion/retain-strip-on-death/actions/workflows/build.yml)
 
 When a pawn dies, if they were ordered to be stripped, this status will be changed to forbidden upon their death.
 
