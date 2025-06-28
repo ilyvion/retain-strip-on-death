@@ -1,71 +1,71 @@
 name: Release
 
 on:
-    push:
-        tags:
-            # This will only run the release workflow when it's tagged with a version
-            # tag.
-            - "v*"
+  push:
+    tags:
+      # This will only run the release workflow when it's tagged with a version
+      # tag.
+      - "v*"
 
 jobs:
-    build:
-        uses: ./.github/workflows/build.yml
+  build:
+    uses: ./.github/workflows/build.yml
+    with:
+      artifact-suffix: Release
+
+  package:
+    name: Release
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set Environment Variables
+        run: |
+          echo "MOD_PATH=$HOME/RetainStripOnDeath" >> $GITHUB_ENV
+          echo "VERSION=${GITHUB_REF/refs\/tags\//}" >> $GITHUB_ENV
+          echo "NO_PREFIX_VERSION=${GITHUB_REF#refs/tags/v}" >> $GITHUB_ENV
+
+      - name: Create Mod Folder
+        run: mkdir -p ${{ env.MOD_PATH }}
+
+      - name: Download Mod Artifacts from Build Step
+        uses: actions/download-artifact@v4
         with:
-            artifact-suffix: Release
+          name: RetainStripOnDeath-Release
+          path: ${{ env.MOD_PATH }}
 
-    package:
-        name: Release
-        needs: build
-        runs-on: ubuntu-latest
-        steps:
-            - name: Set Environment Variables
-              run: |
-                  echo "MOD_PATH=$HOME/RetainStripOnDeath" >> $GITHUB_ENV
-                  echo "VERSION=${GITHUB_REF/refs\/tags\//}" >> $GITHUB_ENV
-                  echo "NO_PREFIX_VERSION=${GITHUB_REF#refs/tags/v}" >> $GITHUB_ENV
+      - name: Zip Mod
+        run: |
+          cd $HOME
+          zip -r ./RetainStripOnDeath.zip ./RetainStripOnDeath/*
 
-            - name: Create Mod Folder
-              run: mkdir -p ${{ env.MOD_PATH }}
+      - name: Checkout Repository
+        uses: actions/checkout@v4
 
-            - name: Download Mod Artifacts from Build Step
-              uses: actions/download-artifact@v3
-              with:
-                  name: RetainStripOnDeath-Release
-                  path: ${{ env.MOD_PATH }}
+      - name: Get Changelog Entry
+        id: changelog_reader
+        uses: mindsers/changelog-reader-action@v2
+        with:
+          version: ${{ env.NO_PREFIX_VERSION }}
+          path: ./CHANGELOG.md
 
-            - name: Zip Mod
-              run: |
-                  cd $HOME
-                  zip -r ./RetainStripOnDeath.zip ./RetainStripOnDeath/*
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ env.VERSION }}
+          release_name: Release ${{ env.VERSION }}
+          body: ${{ steps.changelog_reader.outputs.changes }}
+          draft: false
+          prerelease: false
 
-            - name: Checkout Repository
-              uses: actions/checkout@v3
-
-            - name: Get Changelog Entry
-              id: changelog_reader
-              uses: mindsers/changelog-reader-action@v2
-              with:
-                  version: ${{ env.NO_PREFIX_VERSION }}
-                  path: ./CHANGELOG.md
-
-            - name: Create Release
-              id: create_release
-              uses: actions/create-release@v1
-              env:
-                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-              with:
-                  tag_name: ${{ env.VERSION }}
-                  release_name: Release ${{ env.VERSION }}
-                  body: ${{ steps.changelog_reader.outputs.changes }}
-                  draft: false
-                  prerelease: false
-
-            - name: Upload Release Asset
-              uses: actions/upload-release-asset@v1
-              env:
-                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-              with:
-                  upload_url: ${{ steps.create_release.outputs.upload_url }}
-                  asset_path: ${{ env.MOD_PATH }}.zip
-                  asset_name: RetainStripOnDeath-${{ env.VERSION }}.zip
-                  asset_content_type: application/zip
+      - name: Upload Release Asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ${{ env.MOD_PATH }}.zip
+          asset_name: RetainStripOnDeath-${{ env.VERSION }}.zip
+          asset_content_type: application/zip
