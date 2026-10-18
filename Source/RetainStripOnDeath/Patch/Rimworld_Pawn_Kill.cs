@@ -8,28 +8,25 @@ internal static class Rimworld_Pawn_Kill
 
     private static void Prefix(ref Pawn __instance)
     {
-        var currentMap = __instance.Map;
-        if (currentMap == null)
-        {
-            ShouldStripCorpseOfPawn.Add(__instance, null);
-            return;
-        }
+        var pawn = __instance;
+        ShouldStripCorpseOfPawn[pawn] = ClassifyStripDesignation(
+            pawn.Map,
+            designationManager =>
+                designationManager.DesignationOn(pawn, DesignationDefOf.Strip) != null
+        );
+    }
 
-        var designationManager = currentMap.designationManager;
-        if (designationManager == null)
-        {
-            ShouldStripCorpseOfPawn.Add(__instance, null);
-            return;
-        }
-
-        if (designationManager.DesignationOn(__instance, DesignationDefOf.Strip) != null)
-        {
-            ShouldStripCorpseOfPawn.Add(__instance, true);
-        }
-        else
-        {
-            ShouldStripCorpseOfPawn.Add(__instance, false);
-        }
+    /// <summary>
+    /// Whether a pawn on <paramref name="map"/> has a Strip designation, as told by
+    /// <paramref name="hasStrip"/>, or null if there is no map or designation manager to ask.
+    /// </summary>
+    internal static bool? ClassifyStripDesignation(
+        Map? map,
+        Func<DesignationManager, bool> hasStrip
+    )
+    {
+        var designationManager = map?.designationManager;
+        return designationManager == null ? null : hasStrip(designationManager);
     }
 
     private static void Postfix(ref Pawn __instance)
@@ -52,36 +49,59 @@ internal static class Rimworld_Pawn_Kill
             return;
         }
 
-        if (shouldStripCorpseOfPawn.Value)
+        // Kill skips making a corpse for races without a corpse def, so there may be none
+        if (shouldStripCorpseOfPawn.Value && PawnCorpse.TryGetValue(__instance, out var corpse))
         {
-            var corpse = PawnCorpse[__instance];
             var corpseMap = corpse.Map;
             var corpsePosition = corpse.Position;
+            var inBounds = corpseMap != null && corpsePosition.InBounds(corpseMap);
 
-            if (corpseMap == null)
-            {
-                // The corpse couldn't be placed or was destroyed during Kill, so there's nothing
-                // to designate
-            }
-            else if (
-                !Settings.AlsoOutsideHomeArea
-                && corpsePosition.InBounds(corpseMap)
-                && !corpseMap.areaManager.Home[corpsePosition]
+            if (
+                ShouldDesignateCorpse(
+                    corpseSpawned: corpseMap != null,
+                    Settings.AlsoOutsideHomeArea,
+                    inBounds,
+                    inHomeArea: inBounds && corpseMap!.areaManager.Home[corpsePosition],
+                    corpse.AnythingToStrip
+                )
             )
             {
-                // This corpse is outside the home area, and the setting to retain stripping
-                // outside the home area is off, so do nothing
-                // (i.e. let the game do what it does by default)
-            }
-            else if (corpse.AnythingToStrip())
-            {
                 // Mark corpse for stripping if pawn was marked for stripping and has anything to strip
-                corpseMap.designationManager?.AddDesignation(
+                corpseMap!.designationManager?.AddDesignation(
                     new Designation(corpse, DesignationDefOf.Strip)
                 );
             }
             _ = PawnCorpse.Remove(__instance);
         }
         _ = ShouldStripCorpseOfPawn.Remove(__instance);
+    }
+
+    /// <summary>
+    /// Whether the corpse of a pawn that was marked for stripping should be marked for stripping too.
+    /// </summary>
+    internal static bool ShouldDesignateCorpse(
+        bool corpseSpawned,
+        bool alsoOutsideHomeArea,
+        bool inBounds,
+        bool inHomeArea,
+        Func<bool> anythingToStrip
+    )
+    {
+        if (!corpseSpawned)
+        {
+            // The corpse couldn't be placed or was destroyed during Kill, so there's nothing
+            // to designate
+            return false;
+        }
+
+        if (!alsoOutsideHomeArea && inBounds && !inHomeArea)
+        {
+            // This corpse is outside the home area, and the setting to retain stripping
+            // outside the home area is off, so do nothing
+            // (i.e. let the game do what it does by default)
+            return false;
+        }
+
+        return anythingToStrip();
     }
 }

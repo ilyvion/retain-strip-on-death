@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - A pawn that died off the map (e.g. in a caravan or during map generation) and was later resurrected could not be killed again; the mod threw an exception and the pawn stayed alive.
 - Killing a pawn marked for stripping threw an exception when its corpse couldn't be placed on the map or was destroyed as the pawn died (e.g. a creature that vanishes on death).
+- Killing a pawn marked for stripping threw an exception, and the pawn stayed alive, when its race leaves no corpse (e.g. some modded creatures).
 
 ## [0.2.0] - 2025-06-28
 

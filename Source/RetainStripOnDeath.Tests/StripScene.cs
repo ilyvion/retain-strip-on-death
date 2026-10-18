@@ -31,7 +31,7 @@ internal sealed class StripScene : IDisposable
 
     // Factionless, so killing it sends no letter and changes no goodwill. Wears a parka so its
     // corpse always has something to strip.
-    private Pawn MakePawn()
+    public Pawn MakePawn()
     {
         var pawn = PawnGenerator.GeneratePawn(
             new PawnGenerationRequest(PawnKindDefOf.Villager, faction: null)
