@@ -1,0 +1,14 @@
+Normally when a pawn dies, if they were ordered to be stripped, this designation will disappear after they die.
+
+Retain Strip on Death ensures that a pawn that was ordered to be stripped will still be ordered to be stripped after they die.
+
+RimWorld normally forbids corpses that appear outside the home area. By default, those corpses keep their stripping designation too; turn off the mod's 'Retain stripping designation also outside home area' setting to only keep it for corpses inside the home area.
+
+[h1]Source code[/h1]
+
+Source code can be found on [url=https://github.com/ilyvion/retain-strip-on-death]GitHub[/url]. Report any bugs or feature suggestions/requests on the [url=https://github.com/ilyvion/retain-strip-on-death/issues]issue tracker[/url].
+
+[h1]Like my work?[/h1]
+[url=https://ko-fi.com/ilyvion][img]https://alexanderschroeder.net/files/steam/kofi_brandasset/support_me_on_kofi_beige.png[/img][/url]
+
+Feel free to [url=https://discord.gg/J9Q78avHgM]join my Discord server[/url] if you want to talk to me (and other members) about my projects, or just to hang out, I guess. :)

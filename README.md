@@ -1,6 +1,6 @@
-[![RimWorld 1.4](https://img.shields.io/badge/RimWorld-1.4-brightgreen.svg)](http://rimworldgame.com/) [![RimWorld 1.5](https://img.shields.io/badge/RimWorld-1.5-brightgreen.svg)](http://rimworldgame.com/) [![RimWorld 1.6](https://img.shields.io/badge/RimWorld-1.6-brightgreen.svg)](http://rimworldgame.com/) [![Build](https://github.com/ilyvion/retain-strip-on-death/actions/workflows/ci.yml/badge.svg)](https://github.com/ilyvion/retain-strip-on-death/actions/workflows/ci.yml)
+[![RimWorld 1.4](https://img.shields.io/badge/RimWorld-1.4-brightgreen.svg)](http://rimworldgame.com/) [![RimWorld 1.5](https://img.shields.io/badge/RimWorld-1.5-brightgreen.svg)](http://rimworldgame.com/) [![RimWorld 1.6](https://img.shields.io/badge/RimWorld-1.6-brightgreen.svg)](http://rimworldgame.com/) [![RimWorld 1.7](https://img.shields.io/badge/RimWorld-1.7-brightgreen.svg)](http://rimworldgame.com/) [![Build](https://github.com/ilyvion/retain-strip-on-death/actions/workflows/ci.yml/badge.svg)](https://github.com/ilyvion/retain-strip-on-death/actions/workflows/ci.yml)
 
-When a pawn dies, if they were ordered to be stripped, this designation will disappear after they die.
+Normally when a pawn dies, if they were ordered to be stripped, this designation will disappear after they die.
 
 Retain Strip on Death ensures that a pawn that was ordered to be stripped will still be ordered to be stripped after they die.
 
