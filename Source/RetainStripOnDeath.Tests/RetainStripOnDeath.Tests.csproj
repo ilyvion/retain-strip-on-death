@@ -45,6 +45,7 @@
             <CopyLocal>False</CopyLocal>
             <Private>false</Private>
         </ProjectReference>
+        <Publicize Include="Assembly-CSharp:RimWorld.Building_SubcoreScanner.fabricationTicksLeft" />
     </ItemGroup>
     <ItemGroup Condition="'$(RimWorldVersion)' != '1.6' And '$(RimWorldVersion)' != '1.7'">
         <Compile Remove="**/*.cs" />
