@@ -1,5 +1,3 @@
-/.vscode/obj
+/Source/*/obj
 
-/*/Assemblies
-
-.savedatafolder
+/**/Assemblies

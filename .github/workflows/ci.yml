@@ -1,4 +1,4 @@
-name: Build
+name: Continuous Integration
 
 on:
     push:
@@ -20,6 +20,11 @@ on:
 
 jobs:
     build:
-        uses: ./.github/workflows/build.yml
+        uses: ilyvion/rimworld-utils/.github/workflows/build_mod.yml@main
         with:
-            artifact-suffix: ${{ github.sha }}
+            mod_name: "RetainStripOnDeath"
+            artifact_suffix: ${{ github.sha }}
+            license_files: |-
+                LICENSE
+                LICENSE.Apache-2.0
+                LICENSE.MIT

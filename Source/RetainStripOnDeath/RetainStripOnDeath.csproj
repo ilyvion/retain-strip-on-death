@@ -1,0 +1,6 @@
+<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <RootNamespace>RetainStripOnDeath</RootNamespace>
+        <AssemblyName>RetainStripOnDeath</AssemblyName>
+    </PropertyGroup>
+</Project>

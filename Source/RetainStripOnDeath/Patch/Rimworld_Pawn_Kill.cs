@@ -1,26 +1,21 @@
-using HarmonyLib;
-using Verse;
-using System.Collections.Generic;
-using RimWorld;
-
 namespace RetainStripOnDeath;
 
 [HarmonyPatch(typeof(Pawn), nameof(Pawn.Kill))]
 internal static class Rimworld_Pawn_Kill
 {
-    internal static Dictionary<Pawn, bool?> ShouldStripCorpseOfPawn = new();
-    internal static Dictionary<Pawn, Corpse> PawnCorpse = new();
+    internal static Dictionary<Pawn, bool?> ShouldStripCorpseOfPawn = [];
+    internal static Dictionary<Pawn, Corpse> PawnCorpse = [];
 
     private static void Prefix(ref Pawn __instance)
     {
-        Map currentMap = __instance.Map;
+        var currentMap = __instance.Map;
         if (currentMap == null)
         {
             ShouldStripCorpseOfPawn.Add(__instance, null);
             return;
         }
 
-        DesignationManager designationManager = currentMap.designationManager;
+        var designationManager = currentMap.designationManager;
         if (designationManager == null)
         {
             ShouldStripCorpseOfPawn.Add(__instance, null);
@@ -42,7 +37,10 @@ internal static class Rimworld_Pawn_Kill
         // Just as a safeguard against mistakes
         if (!ShouldStripCorpseOfPawn.TryGetValue(__instance, out var shouldStripCorpseOfPawn))
         {
-            RetainStripOnDeathMod.ErrorOnce("Ended up in Kill.Postfix without a value for 'shouldStripCorpseOfPawn'. This shouldn't be possible and is a bug.", 0x420 + 0x69 + 0x120188);
+            RetainStripOnDeathMod.ErrorOnce(
+                "Ended up in Kill.Postfix without a value for 'shouldStripCorpseOfPawn'. This shouldn't be possible and is a bug.",
+                0x420 + 0x69 + 0x120188
+            );
             return;
         }
 
@@ -59,7 +57,11 @@ internal static class Rimworld_Pawn_Kill
             var corpseMap = corpse.Map;
             var corpsePosition = corpse.Position;
 
-            if (!Settings.AlsoOutsideHomeArea && corpsePosition.InBounds(corpseMap) && !corpseMap.areaManager.Home[corpsePosition])
+            if (
+                !Settings.AlsoOutsideHomeArea
+                && corpsePosition.InBounds(corpseMap)
+                && !corpseMap.areaManager.Home[corpsePosition]
+            )
             {
                 // This corpse is outside the home area, and the setting to retain stripping
                 // outside the home area is off, so do nothing
@@ -68,10 +70,12 @@ internal static class Rimworld_Pawn_Kill
             else if (corpse.AnythingToStrip())
             {
                 // Mark corpse for stripping if pawn was marked for stripping and has anything to strip
-                corpseMap.designationManager?.AddDesignation(new Designation(corpse, DesignationDefOf.Strip));
+                corpseMap.designationManager?.AddDesignation(
+                    new Designation(corpse, DesignationDefOf.Strip)
+                );
             }
-            PawnCorpse.Remove(__instance);
+            _ = PawnCorpse.Remove(__instance);
         }
-        ShouldStripCorpseOfPawn.Remove(__instance);
+        _ = ShouldStripCorpseOfPawn.Remove(__instance);
     }
 }
