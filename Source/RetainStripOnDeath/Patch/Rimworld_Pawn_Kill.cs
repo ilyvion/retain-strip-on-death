@@ -58,7 +58,12 @@ internal static class Rimworld_Pawn_Kill
             var corpseMap = corpse.Map;
             var corpsePosition = corpse.Position;
 
-            if (
+            if (corpseMap == null)
+            {
+                // The corpse couldn't be placed or was destroyed during Kill, so there's nothing
+                // to designate
+            }
+            else if (
                 !Settings.AlsoOutsideHomeArea
                 && corpsePosition.InBounds(corpseMap)
                 && !corpseMap.areaManager.Home[corpsePosition]
