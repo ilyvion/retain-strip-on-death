@@ -48,6 +48,7 @@ internal static class Rimworld_Pawn_Kill
         // This probably means they died off map or pre-map (such as at map generation) at the start of a game.
         if (!shouldStripCorpseOfPawn.HasValue)
         {
+            _ = ShouldStripCorpseOfPawn.Remove(__instance);
             return;
         }
 

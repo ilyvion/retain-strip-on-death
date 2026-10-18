@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- A pawn that died off the map (e.g. in a caravan or during map generation) and was later resurrected could not be killed again; the mod threw an exception and the pawn stayed alive.
+
 ## [0.2.0] - 2025-06-28
 
 ### Added

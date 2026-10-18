@@ -1,8 +1,10 @@
-[![RimWorld 1.6](https://img.shields.io/badge/RimWorld-1.6-brightgreen.svg)](http://rimworldgame.com/) [![Build](https://github.com/ilyvion/retain-strip-on-death/actions/workflows/ci.yml/badge.svg)](https://github.com/ilyvion/retain-strip-on-death/actions/workflows/ci.yml)
+[![RimWorld 1.4](https://img.shields.io/badge/RimWorld-1.4-brightgreen.svg)](http://rimworldgame.com/) [![RimWorld 1.5](https://img.shields.io/badge/RimWorld-1.5-brightgreen.svg)](http://rimworldgame.com/) [![RimWorld 1.6](https://img.shields.io/badge/RimWorld-1.6-brightgreen.svg)](http://rimworldgame.com/) [![Build](https://github.com/ilyvion/retain-strip-on-death/actions/workflows/ci.yml/badge.svg)](https://github.com/ilyvion/retain-strip-on-death/actions/workflows/ci.yml)
 
-When a pawn dies, if they were ordered to be stripped, this status will be changed to forbidden upon their death.
+When a pawn dies, if they were ordered to be stripped, this designation will disappear after they die.
 
-Retain Strip on Death ensures that a pawn that was ordered to be stripped will still be ordered to be stripped upon their death.
+Retain Strip on Death ensures that a pawn that was ordered to be stripped will still be ordered to be stripped after they die.
+
+RimWorld normally forbids corpses that appear outside the home area. By default, those corpses keep their stripping designation too; turn off the mod's 'Retain stripping designation also outside home area' setting to only keep it for corpses inside the home area.
 
 ## License
 
