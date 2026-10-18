@@ -1,3 +1,5 @@
+[assembly: InternalsVisibleTo("RetainStripOnDeath.Tests")]
+
 namespace RetainStripOnDeath;
 
 /// <summary>

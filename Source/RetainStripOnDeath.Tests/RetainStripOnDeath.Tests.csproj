@@ -1,0 +1,52 @@
+<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <RootNamespace>RetainStripOnDeath.Tests</RootNamespace>
+        <AssemblyName>RetainStripOnDeath.Tests</AssemblyName>
+    </PropertyGroup>
+    <!--
+        Dev-only test assembly, run in-game via DevTools
+        (https://github.com/ilyvion/SmashPhil-DevTools.git).
+        It builds into the same <version>/Assemblies folder as the mod assembly, next to the
+        DevTools.dll that the DevTools reference below also builds into that folder.
+
+        It's listed in RetainStripOnDeath.sln so it always builds locally (default
+        Configuration is Debug, see .vscode/build_config.sh), but RetainStripOnDeath.sln
+        deliberately omits a Release|Any CPU.Build.0 line for this project's GUID, so a
+        Release-configuration build (what CI/release always use, per rimworld-utils'
+        build_mod.yml) skips building it, and DevTools, entirely; neither DLL lands in a shipped
+        release.
+    -->
+    <!--
+        Without the DevTools reference (see below), this project has no Publicize items of its
+        own, so Krafs.Publicizer's generated IgnoresAccessChecksToAttribute merely shadows the
+        one already made public inside the referenced RetainStripOnDeath assembly; CS0436 is
+        harmless here.
+    -->
+    <PropertyGroup Condition="'$(RimWorldVersion)' != '1.6' And '$(RimWorldVersion)' != '1.7'">
+        <NoWarn>$(NoWarn);CS0436</NoWarn>
+    </PropertyGroup>
+    <ItemGroup>
+        <ProjectReference Include="..\RetainStripOnDeath\RetainStripOnDeath.csproj">
+            <CopyLocal>False</CopyLocal>
+            <Private>false</Private>
+        </ProjectReference>
+    </ItemGroup>
+    <!--
+        DevTools only supports RimWorld 1.6 and 1.7, so for any other RimWorldVersion this project
+        builds as an empty assembly: both the test sources and the DevTools reference are excluded
+        below. DevTools' own OutDir is relative to its clone location, so it's redirected to this
+        mod's <version>/Assemblies folder.
+    -->
+    <ItemGroup Condition="'$(RimWorldVersion)' == '1.6' Or '$(RimWorldVersion)' == '1.7'">
+        <ProjectReference
+            Include="$(ProjectDependenciesBasePath)\Third-Party\DevTools\DevTools\DevTools.csproj"
+            AdditionalProperties="RimWorldVersion=$(RimWorldVersion);OutDir=$(MSBuildThisFileDirectory)..\..\$(RimWorldVersion)\Assemblies\"
+        >
+            <CopyLocal>False</CopyLocal>
+            <Private>false</Private>
+        </ProjectReference>
+    </ItemGroup>
+    <ItemGroup Condition="'$(RimWorldVersion)' != '1.6' And '$(RimWorldVersion)' != '1.7'">
+        <Compile Remove="**/*.cs" />
+    </ItemGroup>
+</Project>
